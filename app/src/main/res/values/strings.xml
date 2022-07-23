@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ExplorerGitHubTest</string>
+    <string name="undefined_error">Undefined error</string>
+</resources>
