@@ -6,11 +6,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface IDataSource {
-
-//    @Headers("Accept: application/vnd.github.mercy-preview+json")
-//    @GET("search/repositories")
-//    fun searchGithub(@Query("q") term: String?): Call<SearchResponse?>?
+internal interface IDataSource {
 
     @GET("/users")
     fun listUsers(): Call<List<User>>
