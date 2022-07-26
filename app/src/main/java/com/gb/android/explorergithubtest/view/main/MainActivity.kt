@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.gb.android.explorergithubtest.R
 import com.gb.android.explorergithubtest.databinding.ActivityMainBinding
 import com.gb.android.explorergithubtest.model.User
-import com.gb.android.explorergithubtest.presenter.main.PresenterContract
+import com.gb.android.explorergithubtest.presenter.main.PresenterMainContract
 import com.gb.android.explorergithubtest.presenter.main.UsersPresenter
 import com.gb.android.explorergithubtest.repository.GitHubRepository
 import com.gb.android.explorergithubtest.repository.IDataSource
@@ -20,7 +20,7 @@ const val BASE_URL = "https://api.github.com"
 class MainActivity : AppCompatActivity(), ViewContractMain {
 
     private val adapter = UsersAdapter()
-    private val presenter: PresenterContract = UsersPresenter(this, createRepository())
+    private val presenter: PresenterMainContract = UsersPresenter(this, createRepository())
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private var totalCount: Int = 0

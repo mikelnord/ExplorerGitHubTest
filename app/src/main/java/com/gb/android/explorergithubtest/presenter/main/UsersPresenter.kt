@@ -9,7 +9,7 @@ import retrofit2.Response
 internal class UsersPresenter internal constructor(
     private val viewContract: ViewContractMain,
     private val repository: GitHubRepository
-) : PresenterContract, GitHubRepository.GitHubRepositoryCallback {
+) : PresenterMainContract, GitHubRepository.GitHubRepositoryCallback {
 
     override fun listUsers() {
         viewContract.displayLoading(true)
