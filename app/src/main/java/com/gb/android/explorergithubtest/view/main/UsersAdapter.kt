@@ -1,4 +1,4 @@
-package com.gb.android.explorergithubtest.view
+package com.gb.android.explorergithubtest.view.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,13 +1,13 @@
-package com.gb.android.explorergithubtest.presenter
+package com.gb.android.explorergithubtest.presenter.main
 
 import com.gb.android.explorergithubtest.model.User
 import com.gb.android.explorergithubtest.repository.GitHubRepository
-import com.gb.android.explorergithubtest.view.ViewContract
+import com.gb.android.explorergithubtest.view.main.ViewContractMain
 import retrofit2.Response
 
 
 internal class UsersPresenter internal constructor(
-    private val viewContract: ViewContract,
+    private val viewContract: ViewContractMain,
     private val repository: GitHubRepository
 ) : PresenterContract, GitHubRepository.GitHubRepositoryCallback {
 

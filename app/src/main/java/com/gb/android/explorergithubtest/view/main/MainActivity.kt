@@ -1,4 +1,4 @@
-package com.gb.android.explorergithubtest.view
+package com.gb.android.explorergithubtest.view.main
 
 import android.os.Bundle
 import android.view.View
@@ -7,21 +7,24 @@ import androidx.appcompat.app.AppCompatActivity
 import com.gb.android.explorergithubtest.R
 import com.gb.android.explorergithubtest.databinding.ActivityMainBinding
 import com.gb.android.explorergithubtest.model.User
-import com.gb.android.explorergithubtest.presenter.PresenterContract
-import com.gb.android.explorergithubtest.presenter.UsersPresenter
+import com.gb.android.explorergithubtest.presenter.main.PresenterContract
+import com.gb.android.explorergithubtest.presenter.main.UsersPresenter
 import com.gb.android.explorergithubtest.repository.GitHubRepository
 import com.gb.android.explorergithubtest.repository.IDataSource
+import com.gb.android.explorergithubtest.view.detail.DetailsActivity
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 const val BASE_URL = "https://api.github.com"
 
-class MainActivity : AppCompatActivity(), ViewContract {
+class MainActivity : AppCompatActivity(), ViewContractMain {
 
     private val adapter = UsersAdapter()
     private val presenter: PresenterContract = UsersPresenter(this, createRepository())
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
+    private var totalCount: Int = 0
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +35,9 @@ class MainActivity : AppCompatActivity(), ViewContract {
     }
 
     private fun setupUI() {
+        binding.toDetailsActivityButton.setOnClickListener {
+            startActivity(DetailsActivity.getIntent(this, totalCount))
+        }
         setRecyclerView()
         setUsersList()
     }

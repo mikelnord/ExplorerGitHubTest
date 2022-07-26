@@ -1,9 +1,9 @@
 package com.gb.android.explorergithubtest
 
 import com.gb.android.explorergithubtest.model.User
-import com.gb.android.explorergithubtest.presenter.UsersPresenter
+import com.gb.android.explorergithubtest.presenter.main.UsersPresenter
 import com.gb.android.explorergithubtest.repository.GitHubRepository
-import com.gb.android.explorergithubtest.view.ViewContract
+import com.gb.android.explorergithubtest.view.main.ViewContractMain
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -21,7 +21,7 @@ class UsersPresenterTest {
     private lateinit var repository: GitHubRepository
 
     @Mock
-    private lateinit var viewContract: ViewContract
+    private lateinit var viewContract: ViewContractMain
 
     @Before
     fun setUp() {
