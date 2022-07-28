@@ -6,7 +6,7 @@ import com.gb.android.explorergithubtest.view.ViewContract
 
 interface ViewContractMain:ViewContract {
     fun displayListUsers(
-        usersList: List<User>
+        usersList: List<User>, count:Int
     )
 
     fun displayError()

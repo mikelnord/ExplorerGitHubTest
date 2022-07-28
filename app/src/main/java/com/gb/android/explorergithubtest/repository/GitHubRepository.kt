@@ -5,9 +5,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-internal class GitHubRepository(private val iDataSource: IDataSource) {
+internal class GitHubRepository(private val iDataSource: IDataSource) : IGitHubRepository {
 
-    fun listUsers(
+    override fun listUsers(
         callback: GitHubRepositoryCallback
     ) {
         val call = iDataSource.listUsers()
@@ -17,7 +17,7 @@ internal class GitHubRepository(private val iDataSource: IDataSource) {
                 call: Call<List<User>>,
                 response: Response<List<User>>
             ) {
-                callback.handleGitHubResponse(response)
+                callback.handleGitHubResponse(response, response.body()?.size ?: 0)
             }
 
             override fun onFailure(
@@ -30,7 +30,7 @@ internal class GitHubRepository(private val iDataSource: IDataSource) {
     }
 
     interface GitHubRepositoryCallback {
-        fun handleGitHubResponse(response: Response<List<User>>?)
+        fun handleGitHubResponse(response: Response<List<User>>?, count: Int)
         fun handleGitHubError()
     }
 }
