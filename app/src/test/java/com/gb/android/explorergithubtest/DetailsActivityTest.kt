@@ -45,7 +45,7 @@ class DetailsActivityTest {
     @Test
     fun activityTextView_NotNull() {
         scenario.onActivity {
-            val totalCountTextView = it.findViewById<TextView>(R.id.totalCountTextView)
+            val totalCountTextView = it.findViewById<TextView>(R.id.detailTotalCountTextView)
             TestCase.assertNotNull(totalCountTextView)
         }
     }
@@ -53,15 +53,15 @@ class DetailsActivityTest {
     @Test
     fun activityTextView_HasText() {
         scenario.onActivity {
-            val totalCountTextView = it.findViewById<TextView>(R.id.totalCountTextView)
-            TestCase.assertEquals("Number of results: 0", totalCountTextView.text)
+            val totalCountTextView = it.findViewById<TextView>(R.id.detailTotalCountTextView)
+            TestCase.assertEquals(TEST_NUMBER_OF_RESULTS_ZERO, totalCountTextView.text)
         }
     }
 
     @Test
     fun activityTextView_IsVisible() {
         scenario.onActivity {
-            val totalCountTextView = it.findViewById<TextView>(R.id.totalCountTextView)
+            val totalCountTextView = it.findViewById<TextView>(R.id.detailTotalCountTextView)
             TestCase.assertEquals(View.VISIBLE, totalCountTextView.visibility)
         }
     }
@@ -81,10 +81,10 @@ class DetailsActivityTest {
     fun activityButtonIncrement_IsWorking() {
         scenario.onActivity {
             val incrementButton = it.findViewById<Button>(R.id.incrementButton)
-            val totalCountTextView = it.findViewById<TextView>(R.id.totalCountTextView)
+            val totalCountTextView = it.findViewById<TextView>(R.id.detailTotalCountTextView)
             incrementButton.performClick()
 
-            TestCase.assertEquals("Number of results: 1", totalCountTextView.text)
+            TestCase.assertEquals(TEST_NUMBER_OF_RESULTS_PLUS_1, totalCountTextView.text)
         }
     }
 
@@ -92,10 +92,10 @@ class DetailsActivityTest {
     fun activityButtonDecrement_IsWorking() {
         scenario.onActivity {
             val decrementButton = it.findViewById<Button>(R.id.decrementButton)
-            val totalCountTextView = it.findViewById<TextView>(R.id.totalCountTextView)
+            val totalCountTextView = it.findViewById<TextView>(R.id.detailTotalCountTextView)
             decrementButton.performClick()
 
-            TestCase.assertEquals("Number of results: -1", totalCountTextView.text)
+            TestCase.assertEquals(TEST_NUMBER_OF_RESULTS_MINUS_1, totalCountTextView.text)
         }
     }
 

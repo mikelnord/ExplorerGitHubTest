@@ -52,7 +52,7 @@ class UsersPresenterTest {
     fun handleGitHubResponse_Failure() {
         val response = Mockito.mock(Response::class.java) as Response<List<User>>
         Mockito.`when`(response.isSuccessful).thenReturn(false)
-        presenter.handleGitHubResponse(response)
+        presenter.handleGitHubResponse(response,0)
         Mockito.verify(viewContract, Mockito.times(1))
             .displayError("Response is null or unsuccessful")
     }
@@ -61,7 +61,7 @@ class UsersPresenterTest {
     fun handleGitHubResponse_ResponseFailure_ViewContractMethodOrder() {
         val response = Mockito.mock(Response::class.java) as Response<List<User>>
         Mockito.`when`(response.isSuccessful).thenReturn(false)
-        presenter.handleGitHubResponse(response)
+        presenter.handleGitHubResponse(response,TEST_NUMBER)
         val inOrder = Mockito.inOrder(viewContract)
         inOrder.verify(viewContract).displayLoading(false)
         inOrder.verify(viewContract).displayError("Response is null or unsuccessful")
@@ -71,7 +71,7 @@ class UsersPresenterTest {
     fun handleGitHubResponse_ResponseIsEmpty() {
         val response = Mockito.mock(Response::class.java) as Response<List<User>>
         Mockito.`when`(response.body()).thenReturn(null)
-        presenter.handleGitHubResponse(response)
+        presenter.handleGitHubResponse(response,0)
         Assert.assertNull(response.body())
     }
 
@@ -79,7 +79,7 @@ class UsersPresenterTest {
     fun handleGitHubResponse_ResponseIsNotEmpty() {
         val response = Mockito.mock(Response::class.java) as Response<List<User>>
         Mockito.`when`(response.body()).thenReturn(listOf(Mockito.mock(User::class.java)))
-        presenter.handleGitHubResponse(response)
+        presenter.handleGitHubResponse(response,TEST_NUMBER)
         Assert.assertNotNull(response.body())
     }
 
@@ -88,7 +88,7 @@ class UsersPresenterTest {
         val response = Mockito.mock(Response::class.java) as Response<List<User>>
         Mockito.`when`(response.isSuccessful).thenReturn(true)
         Mockito.`when`(response.body()).thenReturn(null)
-        presenter.handleGitHubResponse(response)
+        presenter.handleGitHubResponse(response,0)
         Mockito.verify(viewContract, Mockito.times(1))
             .displayError("List users null")
     }
@@ -99,8 +99,8 @@ class UsersPresenterTest {
         val listUser = listOf(Mockito.mock(User::class.java))
         Mockito.`when`(response.isSuccessful).thenReturn(true)
         Mockito.`when`(response.body()).thenReturn(listUser)
-        presenter.handleGitHubResponse(response)
-        Mockito.verify(viewContract, Mockito.times(1)).displayListUsers(listUser)
+        presenter.handleGitHubResponse(response,TEST_NUMBER)
+        Mockito.verify(viewContract, Mockito.times(1)).displayListUsers(listUser,TEST_NUMBER)
     }
 
 }
