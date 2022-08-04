@@ -2,6 +2,7 @@ package com.gb.android.explorergithubtest.view.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,9 @@ class UsersAdapter :
 
         fun bind(item: User) {
             binding.loginTextView.text = item.login
+            binding.materialCardView.setOnClickListener {
+                Toast.makeText(itemView.context, item.login, Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
