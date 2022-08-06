@@ -16,5 +16,11 @@ internal class FakeGitHubRepository : IGitHubRepository {
     )
 
     override fun listUsers(callback: GitHubRepository.GitHubRepositoryCallback) {
-        callback.handleGitHubResponse(Response.success(listUser),listUser.size)    }
+        callback.handleGitHubResponse(Response.success(listUser), listUser.size)
+    }
+
+    override suspend fun listUsersAsync(): List<User>? {
+        return listUser
+    }
+
 }

@@ -4,13 +4,12 @@ package com.gb.android.explorergithubtest.view.main
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.gb.android.explorergithubtest.BuildConfig
 import com.gb.android.explorergithubtest.R
 import com.gb.android.explorergithubtest.databinding.ActivityMainBinding
 import com.gb.android.explorergithubtest.model.User
-import com.gb.android.explorergithubtest.presenter.main.PresenterMainContract
-import com.gb.android.explorergithubtest.presenter.main.UsersPresenter
 import com.gb.android.explorergithubtest.repository.FakeGitHubRepository
 import com.gb.android.explorergithubtest.repository.GitHubRepository
 import com.gb.android.explorergithubtest.repository.IDataSource
@@ -24,29 +23,63 @@ import java.util.*
 class MainActivity : AppCompatActivity(), ViewContractMain {
 
     private val adapter = UsersAdapter()
-    private val presenter: PresenterMainContract = UsersPresenter(this, createRepository())
+
+    //private val presenter: PresenterMainContract = UsersPresenter(this, createRepository())
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private var totalCount: Int = 0
+    private val repository by lazy { createRepository() }
+    private val viewModel by viewModels<MainViewModel> {
+        MyViewModelFactory(repository)
 
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupUI()
+        viewModel.liveData.observe(this) { onStateChange(it) }
     }
+
+
+    private fun onStateChange(screenState: ScreenState) {
+        when (screenState) {
+            is ScreenState.Working -> {
+                val listUsers = screenState.list
+                val totalCount = listUsers?.size
+                binding.progressBar.visibility = View.GONE
+                with(binding.totalCountTextView) {
+                    visibility = View.VISIBLE
+                    text =
+                        String.format(
+                            Locale.getDefault(),
+                            getString(R.string.results_count),
+                            totalCount
+                        )
+                }
+
+                if (totalCount != null) {
+                    this.totalCount = totalCount
+                }
+                adapter.submitList(listUsers)
+            }
+            is ScreenState.Loading -> {
+                binding.progressBar.visibility = View.VISIBLE
+            }
+            is ScreenState.Error -> {
+                binding.progressBar.visibility = View.GONE
+                Toast.makeText(this, screenState.error.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 
     private fun setupUI() {
         binding.toDetailsActivityButton.setOnClickListener {
             startActivity(DetailsActivity.getIntent(this, totalCount))
         }
         setRecyclerView()
-        setUsersList()
-    }
-
-    private fun setUsersList() {
-        presenter.listUsers()
     }
 
 
